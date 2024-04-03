@@ -13,5 +13,6 @@ public class MapsObjectHome extends ClaseBase {
 	
 	//MAPPING PAGE ELEMENTS
 	protected By linkForms = By.xpath("//*[@class='card-body']//h5[contains(text(), 'Forms')]");
+	protected By popupAlert = By.xpath("//*[@id='cbb']");
 
 }
