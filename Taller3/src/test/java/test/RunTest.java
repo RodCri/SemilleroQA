@@ -32,7 +32,7 @@ public class RunTest {
 	WriteExcelFile write;
 
 	public String path;
-	
+
 	@Before
 	public void setUp() {
 		// INSTANCIAR CLASE PAGEOBJECTHOME
@@ -43,56 +43,58 @@ public class RunTest {
 		pagesForm = new PagesObjectForm(driver);
 		// INSTANCIAR CLASE PROPIEDADES DE JAVA UTIL
 		properties = new Properties();
-		//CREAR VARIABLE TIPO INPUTSTREAM
+		// CREAR VARIABLE TIPO INPUTSTREAM
 		InputStream entrada = null;
-		
+
 		// INSTANCIAR CLASE DE EXCEL
 		read = new ReadExcelFile();
 		write = new WriteExcelFile();
-		
-		//VALIDAR SI GENERA EEROR AL ENCONTRAR EL ARCHIVO
+
+		// VALIDAR SI GENERA EEROR AL ENCONTRAR EL ARCHIVO
 		try {
 			entrada = new FileInputStream("./Properties/properties");
 			properties.load(entrada);
-							
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		// ACCEDER AL METODO DE ABRIR PAGINA
 		pages.urlAccess(properties.getProperty("url"));
-		
+
 		// PROPERTIES
 		path = properties.getProperty("filePathExcel");
 	}
-	
+
 	@Test
-	public void test() throws Exception{
-		pages.enterAForms();
-		pagesForm.enterAPractice();
-		pagesForm.registerForm(read,properties,path);
+	public void test() throws Exception {
+		properties = new Properties();
+		pages.enterAForms(properties);
+		pagesForm.enterAPractice(properties);
+		pagesForm.registerForm(read, properties, path);
 		pagesForm.screenShot();
 	}
-	
+
 	@After
 	public void close() {
 		driver.quit();
 	}
-	
+
 	@Rule
 	public TestRule watcher = new TestWatcher() {
 		@Override
 		protected void failed(Throwable throwable, Description description) {
-			File screenShotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+			File screenShotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			try {
-				FileUtils.copyFile(screenShotFile, new File("screen"+pages.getDate()+".png"));
+				FileUtils.copyFile(screenShotFile, new File("screen" + pages.getDate() + ".png"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+
 		@Override
 		protected void finished(Description description) {
-			
+
 		}
 	};
 
