@@ -1,0 +1,3 @@
+url=https://demoqa.com/
+filePathExcel=./data/usersData.xlsx
+outputFile=./output/
